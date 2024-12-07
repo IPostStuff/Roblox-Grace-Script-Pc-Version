@@ -1,0 +1,235 @@
+local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Orion/main/source'))()
+
+local Window = OrionLib:MakeWindow({
+    Name = "Grace Script Hub",
+    HidePremium = false,
+    SaveConfig = false,
+})
+
+local ScriptsTab = Window:MakeTab({
+    Name = "Scripts",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+local MiscellaneousTab = Window:MakeTab({
+    Name = "Miscellaneous",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+local CreditsTab = Window:MakeTab({
+    Name = "Credits",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+local Players = game:GetService("Players")
+local Camera = game:GetService("Workspace").CurrentCamera
+
+local function DrawESP(player)
+    local espPart = Instance.new("BillboardGui")
+    espPart.Adornee = player.Character:FindFirstChild("Head")
+    espPart.Parent = player.Character:FindFirstChild("Head")
+    espPart.Size = UDim2.new(0, 100, 0, 50)
+    espPart.StudsOffset = Vector3.new(0, 2, 0)
+    
+    local textLabel = Instance.new("TextLabel")
+    textLabel.Parent = espPart
+    textLabel.Size = UDim2.new(1, 0, 1, 0)
+    textLabel.BackgroundTransparency = 1
+    textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    textLabel.TextStrokeTransparency = 0.8
+    textLabel.Text = player.Name .. " | Health: " .. tostring(player.Character.Humanoid.Health)
+    
+    player.Character.Humanoid.HealthChanged:Connect(function()
+        textLabel.Text = player.Name .. " | Health: " .. tostring(player.Character.Humanoid.Health)
+    end)
+end
+
+local function RemoveESP(player)
+    if player.Character and player.Character:FindFirstChild("Head") then
+        local billboard = player.Character.Head:FindFirstChildOfClass("BillboardGui")
+        if billboard then
+            billboard:Destroy()
+        end
+    end
+end
+
+-- Scripts Section
+ScriptsTab:AddLabel("Note: The Godmode script currently doesn't work with Dozer.")
+ScriptsTab:AddButton({
+    Name = "Activate Godmode",
+    Callback = function()
+        if not pcall(function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/IPostStuff/Grace-Godmode-Script/refs/heads/main/Godmode%20Script%20%2B%20Activate%20Levers "))()
+        end) then
+            OrionLib:MakeNotification({
+                Name = "Error",
+                Content = "Unable to execute Godmode Script. It may not be compatible with your executor.",
+                Image = "rbxassetid://4483345998",
+                Time = 5
+            })
+        end
+    end    
+})
+
+ScriptsTab:AddButton({
+    Name = "Grace Get Stimulated Script For Mobile",
+    Callback = function()
+        if not pcall(function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/IPostStuff/Roblox-Grace-Get-Stimulated-Script/refs/heads/main/Get%20Stimulated"))()
+        end) then
+            OrionLib:MakeNotification({
+                Name = "Error",
+                Content = "Unable to execute the Stimulated script.",
+                Image = "rbxassetid://4483345998",
+                Time = 5
+            })
+        end
+    end    
+})
+
+ScriptsTab:AddButton({
+    Name = "Spinning Flashlight for PC",
+    Callback = function()
+        if not pcall(function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/IPostStuff/Spinning-Flashlight-For-Pc/refs/heads/main/Grace%20Script"))()
+        end) then
+            OrionLib:MakeNotification({
+                Name = "Error",
+                Content = "Unable to execute the Spinning Flashlight script.",
+                Image = "rbxassetid://4483345998",
+                Time = 5
+            })
+        end
+    end    
+})
+
+-- WalkSpeed and JumpPower Section
+ScriptsTab:AddLabel("Original Walk Speed: 16")
+ScriptsTab:AddTextbox({
+    Name = "Set Walk Speed",
+    Default = "16",
+    TextDisappear = true,
+    Callback = function(Value)
+        local walkSpeedValue = tonumber(Value)
+        if walkSpeedValue and walkSpeedValue > 0 and walkSpeedValue <= 500 then
+            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = walkSpeedValue
+        else
+            OrionLib:MakeNotification({
+                Name = "Invalid Input",
+                Content = "Enter a valid Walk Speed between 16 and 500.",
+                Image = "rbxassetid://4483345998",
+                Time = 5
+            })
+        end
+    end
+})
+
+ScriptsTab:AddButton({
+    Name = "Reset Walk Speed",
+    Callback = function()
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+    end    
+})
+
+ScriptsTab:AddLabel("Original Jump Power: 50")
+ScriptsTab:AddTextbox({
+    Name = "Set Jump Power",
+    Default = "50",
+    TextDisappear = true,
+    Callback = function(Value)
+        local jumpPowerValue = tonumber(Value)
+        if jumpPowerValue and jumpPowerValue >= 50 and jumpPowerValue <= 200 then
+            game.Players.LocalPlayer.Character.Humanoid.JumpPower = jumpPowerValue
+        else
+            OrionLib:MakeNotification({
+                Name = "Invalid Input",
+                Content = "Enter a valid Jump Power between 50 and 200.",
+                Image = "rbxassetid://4483345998",
+                Time = 5
+            })
+        end
+    end
+})
+
+ScriptsTab:AddButton({
+    Name = "Reset Jump Power",
+    Callback = function()
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
+    end    
+})
+
+-- Miscellaneous Section
+MiscellaneousTab:AddButton({
+    Name = "Infinite Yield",
+    Callback = function()
+        if not pcall(function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+        end) then
+            OrionLib:MakeNotification({
+                Name = "Error",
+                Content = "Unable to execute Infinite Yield.",
+                Image = "rbxassetid://4483345998",
+                Time = 5
+            })
+        end
+    end
+})
+
+MiscellaneousTab:AddButton({
+    Name = "Nameless Admin",
+    Callback = function()
+        if not pcall(function()
+            loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Nameless-Admin-23304"))()
+        end) then
+            OrionLib:MakeNotification({
+                Name = "Error",
+                Content = "Unable to execute Nameless Admin script.",
+                Image = "rbxassetid://4483345998",
+                Time = 5
+            })
+        end
+    end
+})
+
+MiscellaneousTab:AddButton({
+    Name = "X Ghost Hub X",
+    Callback = function()
+        if not pcall(function()
+            loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Ghost-hub-22779"))()
+        end) then
+            OrionLib:MakeNotification({
+                Name = "Error",
+                Content = "Unable to execute Ghost Hub script.",
+                Image = "rbxassetid://4483345998",
+                Time = 5
+            })
+        end
+    end
+})
+
+MiscellaneousTab:AddToggle({
+    Name = "Anti-AFK",
+    Default = false,
+    Callback = function(Value)
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        local humanoid = character:WaitForChild("Humanoid")
+
+        if Value then
+            while Value do
+                wait(5)  -- Keeps the player from going AFK every 5 seconds
+                humanoid:Move(Vector3.new(math.random(), math.random(), math.random()))  -- Small random movement to prevent AFK kick
+            end
+        end
+    end    
+})
+
+-- Credits Section
+CreditsTab:AddLabel("Credits")
+CreditsTab:AddParagraph("Made by BlackWaterYT", "Thanks to the community for the support!")
+CreditsTab:AddLabel("Special thanks for all the help!")
+
+OrionLib:Init()
